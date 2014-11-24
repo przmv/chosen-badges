@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chosen-Badges Demo</title>
+    <!-- Styles for Chosen -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.css">
+    <!-- Styles for Chosen-Badges -->
+    <link rel="stylesheet" href="chosen-badges.css">
+    <!-- Twitter Bootstrap -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- Demo -->
+    <style>
+      .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+        height: 24px;
+      }
+      select {
+        width: 100%;
+      }
+      div[role="tabpanel"] {
+        margin: 30px 0;
+      }
+      ul.nav-tabs {
+        margin-bottom: 15px;
+      }
+    </style>
+    <!-- jQuery -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header class="page-header">
+        <h1>Chosen-Badges Demo</h1>
+      </header>
+
+      <!-- Simple demo begin -->
+      <section>
+        <h2>Simple Badges <small>Show alert on click</small></h2>
+
+        <select id="simple-demo" multiple>
+          <option selected value="fruit">Apple</option>
+          <option value="animal">Fox</option>
+          <option value="number">42</option>
+        </select>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#simple-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#simple-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="simple-demo-html">
+              <pre>&lt;select id=&quot;simple-demo&quot; multiple&gt;
+  &lt;option selected value=&quot;fruit&quot;&gt;Apple&lt;/option&gt;
+  &lt;option value=&quot;animal&quot;&gt;Fox&lt;/option&gt;
+  &lt;option value=&quot;number&quot;&gt;42&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="tab-pane fade" id="simple-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#simple-demo&apos;)
+    .chosenBadges()
+    .chosen()
+    .on(&apos;chosenBadges:click&apos;, function (e) {
+      window.alert(e.value);
+    });
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+            $('#simple-demo')
+            .chosenBadges()
+            .chosen()
+            .on('chosenBadges:click', function (e) {
+              window.alert(e.value);
+            });
+          });
+        </script>
+      </section>
+      <!-- Simple demo end -->
+
+      <hr>
+
+      <!-- Edit demo begin -->
+      <section>
+        <h2>Edit Badges <small>Show prompt on click</small></h2>
+
+        <select id="edit-demo" multiple>
+          <option selected value="fruit">Apple</option>
+          <option selected value="animal">Fox</option>
+          <option value="number">42</option>
+        </select>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#edit-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#edit-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="edit-demo-html">
+              <pre>&lt;select id=&quot;edit-demo&quot; multiple&gt;
+  &lt;option selected value=&quot;fruit&quot;&gt;Apple&lt;/option&gt;
+  &lt;option selected value=&quot;animal&quot;&gt;Fox&lt;/option&gt;
+  &lt;option value=&quot;number&quot;&gt;42&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="tab-pane fade" id="edit-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#edit-demo&apos;)
+    .chosenBadges()
+    .chosen()
+    .on(&apos;chosenBadges:click&apos;, function (e) {
+      var curBadge = e.badge.get(e.key);
+      var newBadge = window.prompt(&apos;New badge&apos;, curBadge) || &quot;n/a&quot;;
+      e.badge.set(e.key, newBadge);
+    });
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+            $('#edit-demo')
+            .chosenBadges()
+            .chosen()
+            .on('chosenBadges:click', function (e) {
+              var curBadge = e.badge.get(e.key);
+              var newBadge = window.prompt('New badge', curBadge) || "n/a";
+              e.badge.set(e.key, newBadge);
+            });
+          });
+        </script>
+      </section>
+      <!-- Edit demo end -->
+
+      <hr>
+
+      <!-- BS Popover demo begin  -->
+      <section>
+        <h2>Bootstrap Popover</h2>
+
+        <select id="popover-demo" multiple>
+          <option selected value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="bananas">Bananas</option>
+        </select>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#popover-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#popover-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="popover-demo-html">
+              <pre>&lt;select id=&quot;popover-demo&quot; multiple&gt;
+  &lt;option selected value=&quot;apples&quot;&gt;Apples&lt;/option&gt;
+  &lt;option value=&quot;oranges&quot;&gt;Oranges&lt;/option&gt;
+  &lt;option value=&quot;bananas&quot;&gt;Bananas&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="tab-pane fade" id="popover-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#popover-demo&apos;)
+    .chosenBadges({
+      value: 0 // Default value
+    })
+    .chosen()
+    .on(&apos;chosenBadges:click&apos;, function (e, badge) {
+      if ($(badge).data(&quot;bs.popover&quot;) !== undefined) {
+        $(badge).popover(&quot;destroy&quot;);
+      } else {
+        $(badge).popover({
+          content: $(document.createElement(&quot;input&quot;))
+                    .attr(&quot;type&quot;, &quot;number&quot;)
+                    .val(e.badge.get(e.key))
+                    .on(&quot;change&quot;, function () {
+                      e.badge.set(e.key, $(this).val());
+                    }),
+          placement: &quot;right&quot;,
+          container: &quot;body&quot;,
+          html: true
+        });
+        $(badge).popover(&quot;show&quot;);
+      }
+    });
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+              $('#popover-demo')
+              .chosenBadges({
+                value: 0 // Default value
+              })
+              .chosen()
+              .on('chosenBadges:click', function (e, badge) {
+                if ($(badge).data("bs.popover") !== undefined) {
+                  $(badge).popover("destroy");
+                } else {
+                  $(badge).popover({
+                    content: $(document.createElement("input"))
+                              .attr("type", "number")
+                              .val(e.badge.get(e.key))
+                              .on("change", function () {
+                                e.badge.set(e.key, $(this).val());
+                              }),
+                    placement: "right",
+                    container: "body",
+                    html: true
+                  });
+                  $(badge).popover("show");
+                }
+              });
+          });
+        </script>
+      </section>
+      <!-- BS Popover demo end  -->
+
+    </div>
+
+    <!-- Chosen -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+    <!-- Chosen-Badges -->
+    <script src="chosen-badges.js"></script>
+    <!-- Twitter Bootstrap -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
