@@ -1,0 +1,14 @@
+.with-badge {
+  pointer-events: none;
+}
+.with-badge:after {
+  background-color: #3FB8AF;
+  border-radius: 2px;
+  color: #fff;
+  content: attr(data-badge);
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px;
+  padding: 0 3px;
+  pointer-events: all;
+}
