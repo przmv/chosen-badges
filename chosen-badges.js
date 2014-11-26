@@ -11,8 +11,12 @@
       value: function (v) {
         return v;
       },
-      // Click callback
-      click: function () {}
+      // Numbering bange widget.
+      // Possible values:
+      // false - disable numbering widget,
+      // true - enable numbering widget,
+      // { min: x, max: y, step: z} - enable widget and set ranges and step
+      numbering: false
     };
 
     // Extend default settings with user defined ones
@@ -23,6 +27,9 @@
 
     // Badges dictionary
     var _badges = {};
+
+    // Numbering mouse down timer
+    var _numberingTimer = null;
 
     // On Chosen Ready event handler
     function _onChosenReady (evt, obj) {
@@ -86,8 +93,79 @@
               e.stopPropagation(); // Do not show choices dropdown
             });
           }
+          if (settings.numbering !== false &&
+              badge.parent().find('.numbering-widget').length === 0) {
+            badge.after(_renderNumbering(key));
+          }
         }
       });
+    }
+
+    // Render numbering widget
+    function _renderNumbering(key) {
+      if (settings.numbering === false) {
+        return;
+      }
+      var upArrow =
+        $(document.createElement('a'))
+        .addClass('numbering-up-arrow')
+        .on('click', function () {
+          _numberingIncrease(key);
+        })
+        .on('mousedown', function () {
+          clearInterval(_numberingTimer);
+          _numberingTimer = setInterval(function () {
+            _numberingIncrease(key);
+          }, 200);
+        })
+        .on('mouseup mouseleave', function () {
+          clearInterval(_numberingTimer);
+        });
+      var downArrow =
+        $(document.createElement('a'))
+        .addClass('numbering-down-arrow')
+        .on('click', function () {
+          _numberingDecrease(key);
+        })
+        .on('mousedown', function () {
+          clearInterval(_numberingTimer);
+          _numberingTimer = setInterval(function () {
+            _numberingDecrease(key);
+          }, 200);
+        })
+        .on('mouseup mouseleave', function () {
+          clearInterval(_numberingTimer);
+        });
+      var widget =
+        $(document.createElement('div'))
+        .addClass('numbering-widget')
+        .append(upArrow, downArrow)
+        .on('mousedown', function (e) {
+          e.stopPropagation();
+        });
+      return widget;
+    }
+
+    function _numberingIncrease(key) {
+      var value = parseInt(get(key), 10);
+      var step = settings.numbering.step;
+      var max = settings.numbering.max;
+      value += (step !== undefined ? step : 1);
+      if (max !== undefined && value > max) {
+        return;
+      }
+      set(key, value);
+    }
+
+    function _numberingDecrease(key) {
+      var value = parseInt(get(key), 10);
+      var step = settings.numbering.step;
+      var min = settings.numbering.min;
+      value -= (step !== undefined ? step : 1);
+      if (min !== undefined && value < min) {
+        return;
+      }
+      set(key, value);
     }
 
     // On Badge click handler
