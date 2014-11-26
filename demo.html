@@ -161,99 +161,6 @@
 
       <hr>
 
-      <!-- BS Popover demo begin  -->
-      <section>
-        <h2>Bootstrap Popover <small>Click on the badge to toggle popover</small></h2>
-
-        <select id="popover-demo" multiple>
-          <option selected value="apples">Apples</option>
-          <option value="oranges">Oranges</option>
-          <option value="bananas">Bananas</option>
-        </select>
-
-        <div role="tabpanel">
-          <ul class="nav nav-tabs">
-            <li class="active">
-              <a href="#popover-demo-html" data-toggle="tab">
-                HTML
-              </a>
-            </li>
-            <li>
-              <a href="#popover-demo-js" data-toggle="tab">
-                JavaScript
-              </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane fade in active" id="popover-demo-html">
-              <pre>&lt;select id=&quot;popover-demo&quot; multiple&gt;
-  &lt;option selected value=&quot;apples&quot;&gt;Apples&lt;/option&gt;
-  &lt;option value=&quot;oranges&quot;&gt;Oranges&lt;/option&gt;
-  &lt;option value=&quot;bananas&quot;&gt;Bananas&lt;/option&gt;
-&lt;/select&gt;</pre>
-            </div>
-            <div class="tab-pane fade" id="popover-demo-js">
-              <pre>&lt;script&gt;
-  $(document).ready(function () {
-    $(&apos;#popover-demo&apos;)
-    .chosenBadges({
-      value: 0 // Default value
-    })
-    .chosen()
-    .on(&apos;chosenBadges:click&apos;, function (e, badge) {
-      if ($(badge).data(&quot;bs.popover&quot;) !== undefined) {
-        $(badge).popover(&quot;destroy&quot;);
-      } else {
-        $(badge).popover({
-          content: $(document.createElement(&quot;input&quot;))
-                    .attr(&quot;type&quot;, &quot;number&quot;)
-                    .val(e.badge.get(e.key))
-                    .on(&quot;change&quot;, function () {
-                      e.badge.set(e.key, $(this).val());
-                    }),
-          placement: &quot;right&quot;,
-          container: &quot;body&quot;,
-          html: true
-        });
-        $(badge).popover(&quot;show&quot;);
-      }
-    });
-  });
-&lt;/script&gt;</pre>
-            </div>
-          </div>
-        </div>
-
-        <script>
-          $(document).ready(function () {
-              $('#popover-demo')
-              .chosenBadges({
-                value: 0 // Default value
-              })
-              .chosen()
-              .on('chosenBadges:click', function (e, badge) {
-                if ($(badge).data("bs.popover") !== undefined) {
-                  $(badge).popover("destroy");
-                } else {
-                  $(badge).popover({
-                    content: $(document.createElement("input"))
-                              .attr("type", "number")
-                              .val(e.badge.get(e.key))
-                              .on("change", function () {
-                                e.badge.set(e.key, $(this).val());
-                              }),
-                    placement: "right",
-                    container: "body",
-                    html: true
-                  });
-                  $(badge).popover("show");
-                }
-              });
-          });
-        </script>
-      </section>
-      <!-- BS Popover demo end -->
-
       <!-- Numbering widget demo begin -->
       <section>
         <h2>Numbering widget demo</h2>
@@ -312,6 +219,8 @@
         </script>
       </section>
       <!-- Numbering widget demo end -->
+
+      <hr>
 
       <!-- Range and step Numbering widget demo begin -->
       <section>
