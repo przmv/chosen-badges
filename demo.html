@@ -252,7 +252,133 @@
           });
         </script>
       </section>
-      <!-- BS Popover demo end  -->
+      <!-- BS Popover demo end -->
+
+      <!-- Numbering widget demo begin -->
+      <section>
+        <h2>Numbering widget demo</h2>
+
+        <select id="numbering-demo" multiple>
+          <option selected value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="bananas">Bananas</option>
+        </select>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#numbering-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#numbering-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="numbering-demo-html">
+              <pre>&lt;select id=&quot;numbering-demo&quot; multiple&gt;
+  &lt;option selected value=&quot;apples&quot;&gt;Apples&lt;/option&gt;
+  &lt;option value=&quot;oranges&quot;&gt;Oranges&lt;/option&gt;
+  &lt;option value=&quot;bananas&quot;&gt;Bananas&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="tab-pane fade" id="numbering-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#numbering-demo&apos;)
+    .chosenBadges({
+      value: 0, // Default value
+      numbering: true
+    })
+    .chosen();
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+              $('#numbering-demo')
+              .chosenBadges({
+                value: 0, // Default value
+                numbering: true
+              })
+              .chosen();
+          });
+        </script>
+      </section>
+      <!-- Numbering widget demo end -->
+
+      <!-- Range and step Numbering widget demo begin -->
+      <section>
+        <h2>Numbering widget demo <small>range and step</small></h2>
+
+        <select id="range-demo" multiple>
+          <option selected value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="bananas">Bananas</option>
+        </select>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#range-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#range-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="range-demo-html">
+              <pre>&lt;select id=&quot;numbering-demo&quot; multiple&gt;
+  &lt;option selected value=&quot;apples&quot;&gt;Apples&lt;/option&gt;
+  &lt;option value=&quot;oranges&quot;&gt;Oranges&lt;/option&gt;
+  &lt;option value=&quot;bananas&quot;&gt;Bananas&lt;/option&gt;
+&lt;/select&gt;</pre>
+            </div>
+            <div class="tab-pane fade" id="range-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#numbering-demo&apos;)
+    .chosenBadges({
+      value: 0, // Default value
+      numbering: {
+        min: 0,
+        max: 100,
+        step: 10
+      }
+    })
+    .chosen();
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+              $('#range-demo')
+              .chosenBadges({
+                value: 0, // Default value
+                numbering: {
+                  min: 0,
+                  max: 100,
+                  step: 10
+                }
+              })
+              .chosen();
+          });
+        </script>
+      </section>
+      <!-- Range and step Numbering widget demo end -->
 
     </div>
 
