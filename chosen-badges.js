@@ -60,14 +60,19 @@
 
     // Badges getter
     function get (key) {
-      return _badges[key];
+      return key !== undefined ? _badges[key] : _badges;
+    }
+
+    // Delete badge
+    function _delete (key) {
+      _set(key, undefined);
     }
 
     // Call value callback/value
     function getValue (key) {
       var value = get(key);
       if (value === undefined) {
-        value = $.isFunction(settings.value) ? settings.value(key) : settings.value;
+        value = $.isFunction(settings.value) ? settings.value(key, self) : settings.value;
         _set(key, value);
       }
       return value;
@@ -190,7 +195,10 @@
     }
 
     // On Change event handler
-    function _onChange () {
+    function _onChange (e, o) {
+      if (o.deselected !== undefined) {
+        _delete(o.deselected);
+      }
       _renderBadges();
     }
 
