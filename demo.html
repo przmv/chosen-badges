@@ -344,6 +344,11 @@
   &lt;option value=&quot;momentum&quot;&gt;Momentum&lt;/option&gt;
 &lt;/select&gt;
 
+&lt;p&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;ascending&quot; checked&gt;
+  &lt;label for=&quot;ascending&quot;&gt;Ascending&lt;/label&gt;
+&lt;/p&gt;
+
 &lt;div class=&quot;btn-toolbar&quot;&gt;
   &lt;button id=&quot;get-badges&quot;&gt;Get Badges&lt;/button&gt;
   &lt;button id=&quot;set-badges&quot;&gt;Set Badges to &lt;code&gt;value: 20, asset_growth: 10, accruals: 10&lt;/code&gt;&lt;/button&gt;
@@ -358,17 +363,30 @@
     $(&apos;#complex-demo&apos;)
     .chosenBadges({
       value: function (key, badge) {
-        var default_value = 20;
+        var defaultVal = 20;
         var selection = $(&apos;#complex-demo&apos;).getSelectionOrder();
         var lastKey = selection[selection.length - 2]; // next to last, since last is the key itself
         var lastVal = badge.get(lastKey);
         if (lastKey === undefined || lastVal === undefined) {
-          return default_value;
+          return defaultVal;
         }
-        return Math.min(lastVal, default_value);
+        return Math.min(lastVal, defaultVal);
       },
       numbering: {
-        min: 10,
+        min: function (key, badge) {
+          var defaultMin = 10;
+          if (!$(&apos;#ascending&apos;).prop(&apos;checked&apos;)) {
+            return defaultMin;
+          }
+          var selection = $(&apos;#complex-demo&apos;).getSelectionOrder();
+          var nextIdx = selection.indexOf(key) + 1;
+          if (nextIdx === selection.length) {
+            return defaultMin;
+          }
+          var nextKey = selection[nextIdx];
+          var nextVal = parseInt(badge.get(nextKey), 10);
+          return Math.max(nextVal, defaultMin);
+        },
         max: 30
       }
     })
@@ -377,7 +395,16 @@
     $(&apos;#get-badges&apos;)
     .on(&apos;click&apos;, function () {
       var badges = $(&apos;#complex-demo&apos;).data(&apos;plugin_chosenBadges&apos;).get();
-      $(&apos;#output&apos;).text(JSON.stringify(badges));
+      var output = [
+        Object.keys(badges),
+        Object.keys(badges).map(function (k) {
+          return badges[k];
+        })
+      ];
+      output = output.map(function (v) {
+        return JSON.stringify(v);
+      });
+      $(&apos;#output&apos;).text(output.join(&apos;\n&apos;));
     });
 
     $(&apos;#set-badges&apos;)
