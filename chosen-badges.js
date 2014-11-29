@@ -96,6 +96,9 @@
           if (settings.numbering !== false &&
               badge.parent().find('.numbering-widget').length === 0) {
             badge.after(_renderNumbering(key));
+            badge.parent().on('click mousedown', function (e) {
+              e.stopPropagation(); // Do not show choices dropdown
+            });
           }
         }
       });

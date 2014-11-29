@@ -6,7 +6,6 @@
   border-radius: 2px;
   color: #fff;
   content: attr(data-badge);
-  cursor: pointer;
   display: inline-block;
   margin: 0 5px;
   padding: 0 3px;
