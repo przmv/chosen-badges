@@ -154,22 +154,47 @@
       return widget;
     }
 
-    function _numberingIncrease(key) {
-      var value = parseInt(get(key), 10);
-      var step = settings.numbering.step;
+    function _getNumberingMin (key) {
+      if (settings.numbering === undefined || settings.numbering === false) {
+        return;
+      }
+      var min = settings.numbering.min;
+      return $.isFunction(min) ? min(key, self) : min;
+    }
+
+    function _getNumberingMax (key) {
+      if (settings.numbering === undefined || settings.numbering === false) {
+        return;
+      }
       var max = settings.numbering.max;
-      value += (step !== undefined ? step : 1);
+      return $.isFunction(max) ? max(key, self) : max;
+    }
+
+    function _getNumberingStep (key) {
+      if (settings.numbering === undefined || settings.numbering === false) {
+        return;
+      }
+      var step = settings.numbering.step;
+      step = $.isFunction(step) ? step(key, self) : step;
+      return step || 1;
+    }
+
+    function _numberingIncrease (key) {
+      var value = parseInt(get(key), 10);
+      var step = _getNumberingStep(key);
+      var max = _getNumberingMax(key);
+      value += step;
       if (max !== undefined && value > max) {
         return;
       }
       set(key, value);
     }
 
-    function _numberingDecrease(key) {
+    function _numberingDecrease (key) {
       var value = parseInt(get(key), 10);
-      var step = settings.numbering.step;
-      var min = settings.numbering.min;
-      value -= (step !== undefined ? step : 1);
+      var step = _getNumberingStep(key);
+      var min = _getNumberingMin(key);
+      value -= step;
       if (min !== undefined && value < min) {
         return;
       }
