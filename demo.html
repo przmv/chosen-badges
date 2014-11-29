@@ -26,6 +26,9 @@
       #edit_demo_chosen .with-badge:after {
         cursor: pointer;
       }
+      .btn-toolbar {
+        margin: 15px 0;
+      }
     </style>
     <!-- jQuery -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -290,6 +293,153 @@
       </section>
       <!-- Range and step Numbering widget demo end -->
 
+      <!-- Complex demo begin -->
+      <section>
+        <h2>Complex Demo</h2>
+
+        <select data-placeholder="Select up to 3 factors" multiple id="complex-demo" data-selectionorder="value">
+          <option selected="selected" value="value">Value</option>
+          <option value="quality">Quality</option>
+          <option value="lowVol">Low Volatility</option>
+          <option value="asset_growth">Asset Growth</option>
+          <option value="accruals">Accruals</option>
+          <option value="shareholder_yield">Shareholder Yield</option>
+          <option value="momentum">Momentum</option>
+        </select>
+
+        <div class="btn-toolbar">
+          <button id="get-badges">Get Badges</button>
+          <button id="set-badges">Set Badges to <code>value: 20, asset_growth: 10, accruals: 10</code></button>
+        </div>
+
+        <pre id="output"></pre>
+
+        <div role="tabpanel">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#complex-demo-html" data-toggle="tab">
+                HTML
+              </a>
+            </li>
+            <li>
+              <a href="#complex-demo-js" data-toggle="tab">
+                JavaScript
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="complex-demo-html">
+              <pre>&lt;select data-placeholder=&quot;Select up to 3 factors&quot; multiple id=&quot;complex-demo&quot; data-selectionorder=&quot;value&quot;&gt;
+  &lt;option selected=&quot;selected&quot; value=&quot;value&quot;&gt;Value&lt;/option&gt;
+  &lt;option value=&quot;quality&quot;&gt;Quality&lt;/option&gt;
+  &lt;option value=&quot;lowVol&quot;&gt;Low Volatility&lt;/option&gt;
+  &lt;option value=&quot;asset_growth&quot;&gt;Asset Growth&lt;/option&gt;
+  &lt;option value=&quot;accruals&quot;&gt;Accruals&lt;/option&gt;
+  &lt;option value=&quot;shareholder_yield&quot;&gt;Shareholder Yield&lt;/option&gt;
+  &lt;option value=&quot;momentum&quot;&gt;Momentum&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;div class=&quot;btn-toolbar&quot;&gt;
+  &lt;button id=&quot;get-badges&quot;&gt;Get Badges&lt;/button&gt;
+  &lt;button id=&quot;set-badges&quot;&gt;Set Badges to &lt;code&gt;value: 20, asset_growth: 10, accruals: 10&lt;/code&gt;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;pre id=&quot;output&quot;&gt;&lt;/pre&gt;
+</pre>
+            </div>
+            <div class="tab-pane fade" id="complex-demo-js">
+              <pre>&lt;script&gt;
+  $(document).ready(function () {
+    $(&apos;#complex-demo&apos;)
+    .chosenBadges({
+      value: function (key, badge) {
+        var default_value = 20;
+        var selection = $(&apos;#complex-demo&apos;).getSelectionOrder();
+        var lastKey = selection[selection.length - 2]; // next to last, since last is the key itself
+        var lastVal = badge.get(lastKey);
+        if (lastKey === undefined || lastVal === undefined) {
+          return default_value;
+        }
+        return Math.min(lastVal, default_value);
+      },
+      numbering: {
+        min: 10,
+        max: 30
+      }
+    })
+    .chosen({max_selected_options: 3});
+
+    $(&apos;#get-badges&apos;)
+    .on(&apos;click&apos;, function () {
+      var badges = $(&apos;#complex-demo&apos;).data(&apos;plugin_chosenBadges&apos;).get();
+      $(&apos;#output&apos;).text(JSON.stringify(badges));
+    });
+
+    $(&apos;#set-badges&apos;)
+    .on(&apos;click&apos;, function () {
+      var badges = {
+        value: 20,
+        asset_growth: 10,
+        accruals: 10
+      };
+      var plugin = $(&apos;#complex-demo&apos;).data(&apos;plugin_chosenBadges&apos;);
+      $(&apos;#complex-demo&apos;).setSelectionOrder(Object.keys(badges), true);
+      $.each(badges, function (k, v) {
+        plugin.set(k, v);
+      });
+    });
+  });
+&lt;/script&gt;
+</pre>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          $(document).ready(function () {
+            $('#complex-demo')
+            .chosenBadges({
+              value: function (key, badge) {
+                var default_value = 20;
+                var selection = $('#complex-demo').getSelectionOrder();
+                var lastKey = selection[selection.length - 2]; // next to last, since last is the key itself
+                var lastVal = badge.get(lastKey);
+                if (lastKey === undefined || lastVal === undefined) {
+                  return default_value;
+                }
+                return Math.min(lastVal, default_value);
+              },
+              numbering: {
+                min: 10,
+                max: 30
+              }
+            })
+            .chosen({max_selected_options: 3});
+
+            $('#get-badges')
+            .on('click', function () {
+              var badges = $('#complex-demo').data('plugin_chosenBadges').get();
+              $('#output').text(JSON.stringify(badges));
+            });
+
+            $('#set-badges')
+            .on('click', function () {
+              var badges = {
+                value: 20,
+                asset_growth: 10,
+                accruals: 10
+              };
+              var plugin = $('#complex-demo').data('plugin_chosenBadges');
+              $('#complex-demo').setSelectionOrder(Object.keys(badges), true);
+              $.each(badges, function (k, v) {
+                plugin.set(k, v);
+              });
+            });
+          });
+        </script>
+      </section>
+      <!-- Complex demo end -->
+
     </div>
 
     <!-- Chosen -->
@@ -298,5 +448,7 @@
     <script src="chosen-badges.js"></script>
     <!-- Twitter Bootstrap -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- Chosen Order Plugin for Complex demo -->
+    <script src="http://labo.tristan-jahier.fr/chosen_order/chosen.order.jquery.min.js"></script>
   </body>
 </html>
