@@ -307,6 +307,11 @@
           <option value="momentum">Momentum</option>
         </select>
 
+        <p>
+          <input type="checkbox" id="ascending" checked>
+          <label for="ascending">Ascending</label>
+        </p>
+
         <div class="btn-toolbar">
           <button id="get-badges">Get Badges</button>
           <button id="set-badges">Set Badges to <code>value: 20, asset_growth: 10, accruals: 10</code></button>
@@ -400,17 +405,30 @@
             $('#complex-demo')
             .chosenBadges({
               value: function (key, badge) {
-                var default_value = 20;
+                var defaultVal = 20;
                 var selection = $('#complex-demo').getSelectionOrder();
                 var lastKey = selection[selection.length - 2]; // next to last, since last is the key itself
                 var lastVal = badge.get(lastKey);
                 if (lastKey === undefined || lastVal === undefined) {
-                  return default_value;
+                  return defaultVal;
                 }
-                return Math.min(lastVal, default_value);
+                return Math.min(lastVal, defaultVal);
               },
               numbering: {
-                min: 10,
+                min: function (key, badge) {
+                  var defaultMin = 10;
+                  if (!$('#ascending').prop('checked')) {
+                    return defaultMin;
+                  }
+                  var selection = $('#complex-demo').getSelectionOrder();
+                  var nextIdx = selection.indexOf(key) + 1;
+                  if (nextIdx === selection.length) {
+                    return defaultMin;
+                  }
+                  var nextKey = selection[nextIdx];
+                  var nextVal = parseInt(badge.get(nextKey), 10);
+                  return Math.max(nextVal, defaultMin);
+                },
                 max: 30
               }
             })
@@ -419,7 +437,16 @@
             $('#get-badges')
             .on('click', function () {
               var badges = $('#complex-demo').data('plugin_chosenBadges').get();
-              $('#output').text(JSON.stringify(badges));
+              var output = [
+                Object.keys(badges),
+                Object.keys(badges).map(function (k) {
+                  return badges[k];
+                })
+              ];
+              output = output.map(function (v) {
+                return JSON.stringify(v);
+              });
+              $('#output').text(output.join('\n'));
             });
 
             $('#set-badges')
