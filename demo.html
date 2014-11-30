@@ -387,7 +387,20 @@
           var nextVal = parseInt(badge.get(nextKey), 10);
           return Math.max(nextVal, defaultMin);
         },
-        max: 30
+        max: function (key, badge) {
+          var defaultMax = 30;
+          if (!$(&apos;#ascending&apos;).prop(&apos;checked&apos;)) {
+            return defaultMax;
+          }
+          var selection = $(&apos;#complex-demo&apos;).getSelectionOrder();
+          var prevIdx = selection.indexOf(key) - 1;
+          if (prevIdx === -1) {
+            return defaultMax;
+          }
+          var prevKey = selection[prevIdx];
+          var prevVal = parseInt(badge.get(prevKey), 10);
+          return Math.min(prevVal, defaultMax);
+        }
       }
     })
     .chosen({max_selected_options: 3});
@@ -421,8 +434,7 @@
       });
     });
   });
-&lt;/script&gt;
-</pre>
+&lt;/script&gt;</pre>
             </div>
           </div>
         </div>
@@ -456,7 +468,20 @@
                   var nextVal = parseInt(badge.get(nextKey), 10);
                   return Math.max(nextVal, defaultMin);
                 },
-                max: 30
+                max: function (key, badge) {
+                  var defaultMax = 30;
+                  if (!$('#ascending').prop('checked')) {
+                    return defaultMax;
+                  }
+                  var selection = $('#complex-demo').getSelectionOrder();
+                  var prevIdx = selection.indexOf(key) - 1;
+                  if (prevIdx === -1) {
+                    return defaultMax;
+                  }
+                  var prevKey = selection[prevIdx];
+                  var prevVal = parseInt(badge.get(prevKey), 10);
+                  return Math.min(prevVal, defaultMax);
+                }
               }
             })
             .chosen({max_selected_options: 3});
