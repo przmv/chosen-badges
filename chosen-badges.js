@@ -49,7 +49,17 @@
 
     // Badges setter (no render after set)
     function _set (key, value) {
-      _badges[key] = value;
+      if (_isObject(arguments[0])) {
+        _badges = arguments[0];
+      } else {
+        _badges[key] = value;
+      }
+    }
+
+    // Check if passed parameter is an object
+    function _isObject (v) {
+      var obj = {};
+      return typeof v === 'object' && !!v && v.constructor === obj.constructor;
     }
 
     // Badges setter (rerender after set)
