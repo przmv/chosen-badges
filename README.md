@@ -64,13 +64,19 @@ Additional event properties:
 Methods
 -------
 ### `get(key)`
-Get badge value by key. If no key is provided returns all badges.
+Get badge value by key.
+
+### `get()`
+Get all badges.
 
 ### `getValue(key)`
 Compute badge value for key using `options.value` property.
 
 ### `set(key, value)`
 Set badge value for key.
+
+### `set(obj)`
+Set all badges.
 
 Demo
 ----
