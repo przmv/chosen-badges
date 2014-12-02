@@ -39,6 +39,16 @@ var options = {
   }
 };
 ```
+`min`, `max` and `step` properties may be functions as well:
+```javascript
+var options = {
+  numbering: {
+    min: function (key, plugin) {
+      …
+    }
+  }
+};
+```
 
 Events
 ------
@@ -62,4 +72,10 @@ Compute badge value for key using `options.value` property.
 ### `set(key, value)`
 Set badge value for key.
 
+Demo
+----
 [Demo](http://pshevtsov.github.io/chosen-badges/demo.html)
+
+License
+-------
+MIT

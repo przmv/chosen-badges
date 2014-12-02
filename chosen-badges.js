@@ -63,9 +63,22 @@
       return key !== undefined ? _badges[key] : _badges;
     }
 
+    // Filter badges
+    function _filterBadges() {
+      var filtered = {};
+      $.each(_badges, function (k, v) {
+        if (v === null || v === undefined) {
+          return;
+        }
+        filtered[k] = v;
+      });
+      return filtered;
+    }
+
     // Delete badge
     function _delete (key) {
       _set(key, undefined);
+      _badges = _filterBadges();
     }
 
     // Call value callback/value
