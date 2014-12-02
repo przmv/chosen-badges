@@ -60,7 +60,7 @@
 
     // Badges getter
     function get (key) {
-      return key !== undefined ? _badges[key] : _filterBadges();
+      return key !== undefined ? _badges[key] : _badges;
     }
 
     // Filter badges
@@ -78,6 +78,7 @@
     // Delete badge
     function _delete (key) {
       _set(key, undefined);
+      _badges = _filterBadges();
     }
 
     // Call value callback/value
