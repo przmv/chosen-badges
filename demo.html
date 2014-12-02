@@ -429,6 +429,7 @@
       };
       var plugin = $(&apos;#complex-demo&apos;).data(&apos;plugin_chosenBadges&apos;);
       $(&apos;#complex-demo&apos;).setSelectionOrder(Object.keys(badges), true);
+      plugin.set({}); // Reset badges
       $.each(badges, function (k, v) {
         plugin.set(k, v);
       });
@@ -510,6 +511,7 @@
               };
               var plugin = $('#complex-demo').data('plugin_chosenBadges');
               $('#complex-demo').setSelectionOrder(Object.keys(badges), true);
+              plugin.set({}); // Reset badges
               $.each(badges, function (k, v) {
                 plugin.set(k, v);
               });
