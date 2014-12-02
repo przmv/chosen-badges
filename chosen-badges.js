@@ -60,7 +60,19 @@
 
     // Badges getter
     function get (key) {
-      return key !== undefined ? _badges[key] : _badges;
+      return key !== undefined ? _badges[key] : _filterBadges();
+    }
+
+    // Filter badges
+    function _filterBadges() {
+      var filtered = {};
+      $.each(_badges, function (k, v) {
+        if (v === null || v === undefined) {
+          return;
+        }
+        filtered[k] = v;
+      });
+      return filtered;
     }
 
     // Delete badge
